@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import GithubContext from "../../context/github/GithubContext";
+import AlertContext from "../../context/alert/AlertContext";
 
 function UserSearch() {
   const [text, setText] = useState("");
   const { users, SearchUsers, dispatch } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
   const handleClear = () => {
     dispatch({
@@ -13,7 +15,7 @@ function UserSearch() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text === "") {
-      alert("Please enter some value");
+      setAlert("Please enter some value", "error");
     } else {
       SearchUsers(text);
       setText("");
@@ -24,7 +26,7 @@ function UserSearch() {
   };
   return (
     <div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 m-1">
         <form onSubmit={handleSubmit}>
           <div className="relative">
             <input

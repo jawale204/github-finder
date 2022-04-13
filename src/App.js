@@ -5,6 +5,7 @@ import Home from "./components/pages/Home";
 import Notfound from "./components/pages/Notfound";
 import About from "./components/pages/About";
 import { AlertProvider } from "./context/alert/AlertContext";
+import Alert from "./components/layouts/Alert";
 function App() {
   return (
     <BrowserRouter>
