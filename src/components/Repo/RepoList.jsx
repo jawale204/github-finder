@@ -10,8 +10,8 @@ function RepoList() {
         <h2 className="text-3xl my-4 font-bold card-title">
           Latest Repositories
         </h2>
-        {repo.map((rep) => (
-          <h1 key={rep.id}> {rep.name}</h1>
+        {repo.map((repoo) => (
+          <h1 key={repoo.id}> {repoo.name}</h1>
         ))}
       </div>
     </div>
