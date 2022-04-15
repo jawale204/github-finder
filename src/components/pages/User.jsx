@@ -3,9 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import GithubContext from "../../context/github/GithubContext";
 import Spinner from "../layouts/Spinner";
 import { FaUsers, FaUserFriends, FaCodepen, FaStore } from "react-icons/fa";
+import RepoList from "../Repo/RepoList";
 
 function User() {
-  const { user, getUser, isLoading } = useContext(GithubContext);
+  const { user, getUser, isLoading, SearchUsersRepo } =
+    useContext(GithubContext);
   const param = useParams();
 
   const {
@@ -27,6 +29,7 @@ function User() {
 
   useEffect(() => {
     getUser(param.login);
+    SearchUsersRepo(param.login);
   }, []);
 
   if (isLoading) {
@@ -155,6 +158,7 @@ function User() {
             </div>
           </div>
         </div>
+        <RepoList login={login} />
       </div>
     </>
   );
