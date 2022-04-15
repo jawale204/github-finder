@@ -28,10 +28,31 @@ export const getUser = async (login) => {
     }
   );
   if (res.status === 404) {
-    window.location.href = "./notfound";
+    window.location.href = "404/notfound";
   } else {
     const data = await res.json();
 
     return data;
   }
+};
+
+//repo search
+export const SearchUsersRepo = async (login) => {
+  const param = new URLSearchParams({
+    sort: "created",
+    per_page: 10,
+  });
+
+  const res = await fetch(
+    `${process.env.REACT_APP_GITHUB_URL}/users/${login}/repos?${param}`,
+    {
+      headers: {
+        Authorization: `token ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
+      },
+    }
+  );
+
+  const data = await res.json();
+
+  return data;
 };

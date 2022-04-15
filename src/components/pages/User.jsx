@@ -4,11 +4,10 @@ import GithubContext from "../../context/github/GithubContext";
 import Spinner from "../layouts/Spinner";
 import { FaUsers, FaUserFriends, FaCodepen, FaStore } from "react-icons/fa";
 import RepoList from "../Repo/RepoList";
-import { getUser } from "../../context/github/GithubActions";
+import { getUser, SearchUsersRepo } from "../../context/github/GithubActions";
 
 function User() {
-  const { user, isLoading, SearchUsersRepo, dispatch, setLoading } =
-    useContext(GithubContext);
+  const { user, isLoading, dispatch, setLoading } = useContext(GithubContext);
   const param = useParams();
 
   const {
@@ -30,7 +29,6 @@ function User() {
 
   useEffect(() => {
     initFetch();
-    SearchUsersRepo(param.login);
   }, []);
 
   const initFetch = async () => {
@@ -40,6 +38,15 @@ function User() {
     dispatch({
       type: "FETCH_USER",
       payload: data,
+    });
+
+    setLoading();
+
+    const data1 = await SearchUsersRepo(param.login);
+
+    dispatch({
+      type: "FETCH_USERS_REPO",
+      payload: data1,
     });
   };
 
