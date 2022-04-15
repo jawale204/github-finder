@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import GithubContext from "../../context/github/GithubContext";
+import RepoItem from "./RepoItem";
 
 function RepoList() {
   const { repo } = useContext(GithubContext);
@@ -11,7 +12,7 @@ function RepoList() {
           Latest Repositories
         </h2>
         {repo.map((repoo) => (
-          <h1 key={repoo.id}> {repoo.name}</h1>
+          <RepoItem key={repoo.id} repo={repoo} />
         ))}
       </div>
     </div>
