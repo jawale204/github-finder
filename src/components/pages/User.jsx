@@ -4,9 +4,10 @@ import GithubContext from "../../context/github/GithubContext";
 import Spinner from "../layouts/Spinner";
 import { FaUsers, FaUserFriends, FaCodepen, FaStore } from "react-icons/fa";
 import RepoList from "../Repo/RepoList";
+import { getUser } from "../../context/github/GithubActions";
 
 function User() {
-  const { user, getUser, isLoading, SearchUsersRepo } =
+  const { user, isLoading, SearchUsersRepo, dispatch, setLoading } =
     useContext(GithubContext);
   const param = useParams();
 
@@ -28,9 +29,19 @@ function User() {
   } = user;
 
   useEffect(() => {
-    getUser(param.login);
+    initFetch();
     SearchUsersRepo(param.login);
   }, []);
+
+  const initFetch = async () => {
+    setLoading();
+    const data = await getUser(param.login);
+
+    dispatch({
+      type: "FETCH_USER",
+      payload: data,
+    });
+  };
 
   if (isLoading) {
     return <Spinner />;

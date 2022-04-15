@@ -40,30 +40,6 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
-  //get User
-  const getUser = async (login) => {
-    setLoading();
-
-    const res = await fetch(
-      `${process.env.REACT_APP_GITHUB_URL}/users/${login}`,
-      {
-        headers: {
-          Authorization: `token ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
-        },
-      }
-    );
-    if (res.status === 404) {
-      window.location.href = "./notfound";
-    } else {
-      const data = await res.json();
-
-      dispatch({
-        type: "FETCH_USER",
-        payload: data,
-      });
-    }
-  };
-
   const setLoading = () => dispatch({ type: "SET_LOADING" });
   return (
     <GithubContext.Provider
@@ -73,7 +49,6 @@ export const GithubProvider = ({ children }) => {
         user: state.user,
         repo: state.repo,
         dispatch,
-        getUser,
         SearchUsersRepo,
         setLoading,
       }}
