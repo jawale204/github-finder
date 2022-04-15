@@ -40,8 +40,6 @@ function User() {
       payload: data,
     });
 
-    setLoading();
-
     const data1 = await SearchUsersRepo(param.login);
 
     dispatch({
