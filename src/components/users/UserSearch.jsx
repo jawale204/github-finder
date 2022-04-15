@@ -13,6 +13,7 @@ function UserSearch() {
       type: "CLEAR_USER_RESULTS",
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (text === "") {

@@ -1,5 +1,4 @@
 import { createContext, useReducer } from "react";
-import { createRenderer } from "react-dom/test-utils";
 import GithubReducer from "./GithubReducer";
 
 const GithubContext = createContext();
@@ -15,15 +14,13 @@ export const GithubProvider = ({ children }) => {
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   const setLoading = () => dispatch({ type: "SET_LOADING" });
+
   return (
     <GithubContext.Provider
       value={{
-        users: state.users,
-        isLoading: state.isLoading,
-        user: state.user,
-        repo: state.repo,
-        dispatch,
+        ...state,
         setLoading,
+        dispatch,
       }}
     >
       {children}

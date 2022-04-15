@@ -4,7 +4,7 @@ import GithubContext from "../../context/github/GithubContext";
 import Spinner from "../layouts/Spinner";
 import { FaUsers, FaUserFriends, FaCodepen, FaStore } from "react-icons/fa";
 import RepoList from "../Repo/RepoList";
-import { getUser, SearchUsersRepo } from "../../context/github/GithubActions";
+import { getUserAndRepos } from "../../context/github/GithubActions";
 
 function User() {
   const { user, isLoading, dispatch, setLoading } = useContext(GithubContext);
@@ -28,25 +28,18 @@ function User() {
   } = user;
 
   useEffect(() => {
+    const initFetch = async () => {
+      setLoading();
+      const data = await getUserAndRepos(param.login);
+
+      dispatch({
+        type: "FETCH_USER_AND_REPO",
+        payload: data,
+      });
+    };
+
     initFetch();
-  }, []);
-
-  const initFetch = async () => {
-    setLoading();
-    const data = await getUser(param.login);
-
-    dispatch({
-      type: "FETCH_USER",
-      payload: data,
-    });
-
-    const data1 = await SearchUsersRepo(param.login);
-
-    dispatch({
-      type: "FETCH_USERS_REPO",
-      payload: data1,
-    });
-  };
+  }, [dispatch, param.login]);
 
   if (isLoading) {
     return <Spinner />;
