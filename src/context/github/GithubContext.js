@@ -14,30 +14,6 @@ export const GithubProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
 
-  //only for testing purpose
-  const SearchUsers = async (text) => {
-    const param = new URLSearchParams({
-      q: text,
-    });
-    setLoading();
-
-    const res = await fetch(
-      `${process.env.REACT_APP_GITHUB_URL}/search/users?${param}`,
-      {
-        headers: {
-          Authorization: `token ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
-        },
-      }
-    );
-
-    const { items } = await res.json();
-
-    dispatch({
-      type: "FETCH_USERS",
-      payload: items,
-    });
-  };
-
   //repo search
   const SearchUsersRepo = async (login) => {
     setLoading();
@@ -97,9 +73,9 @@ export const GithubProvider = ({ children }) => {
         user: state.user,
         repo: state.repo,
         dispatch,
-        SearchUsers,
         getUser,
         SearchUsersRepo,
+        setLoading,
       }}
     >
       {children}
